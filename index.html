@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Attendance Calculator</title>
+    <link rel="stylesheet" href="./style.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="number"] {
+            width: 100px;
+        }
+        button {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Attendance Calculator</h1>
+<div class="cont">
+    <div class="i1 i">
+        <label for="classAttended">Total Classes Attended:</label>
+        <input type="number" id="classAttended">
+    </div>
+    <div class="i2 i">
+        <label for="classTaken">Total Classes Taken:</label>
+        <input type="number" id="classTaken">
+    </div>
+    <button onclick="calculateAttendance()">Calculate</button>
+    <div id="result"></div>
+</div>
+    <script>
+        function calculateAttendance() {
+            var c_a = parseFloat(document.getElementById("classAttended").value);
+            var c_t = parseFloat(document.getElementById("classTaken").value);
+
+            var result = document.getElementById("result");
+            result.innerHTML = "";
+
+            if (isNaN(c_a) || isNaN(c_t)) {
+                result.innerHTML = "Please enter valid numeric values.";
+                return;
+            }
+
+            var attendancePercentage = (c_a / c_t) * 100;
+            result.innerHTML += "The percentage of attendance: " + attendancePercentage.toFixed(2) + "%<br>";
+
+            var e = c_t + 1;
+            var attendancePercentageAfterOneAbsent = (c_a / e) * 100;
+            result.innerHTML += "The percentage of attendance after one class absent: " + attendancePercentageAfterOneAbsent.toFixed(2) + "%<br>";
+
+            var f = attendancePercentageAfterOneAbsent;
+            var demo = 0;
+            var d_a = c_a;
+
+            while (f < 90) {
+                demo += 1;
+                d_a += 1;
+                f = (d_a / e) * 100;
+            }
+
+            result.innerHTML += "Need to attend " + demo + " class(es) and attendance would be " + f.toFixed(2) + "%";
+        }
+    </script>
+</body>
+</html>
